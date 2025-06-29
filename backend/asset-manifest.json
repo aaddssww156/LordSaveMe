@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "./static/css/main.c6d0715d.css",
+    "main.js": "./static/js/main.66b2288c.js",
+    "static/media/slide1.jpg": "./static/media/slide1.0dad7d88d3d493f5d1b4.jpg",
+    "static/media/kitty.png": "./static/media/kitty.2aa5808be689442b3ff0.png",
+    "static/media/slide3.jpg": "./static/media/slide3.b78df9c123a68b77f935.jpg",
+    "static/media/menu.jpg": "./static/media/menu.b32480a435695f488846.jpg",
+    "static/media/slide2.jpg": "./static/media/slide2.6d106b4a6ee186e66102.jpg",
+    "index.html": "./index.html"
+  },
+  "entrypoints": [
+    "static/css/main.c6d0715d.css",
+    "static/js/main.66b2288c.js"
+  ]
+}

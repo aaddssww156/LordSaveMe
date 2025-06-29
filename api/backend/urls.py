@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -11,6 +10,7 @@ urlpatterns = [
     path('api/users/', include('account.urls')),
     path('api/user_requests/', include('user_requests.urls')),
     path('api/contact_messages/', include('contact_messages.urls')),
+    path('api/products/', include('products.urls')),
 ]
 
 if settings.DEBUG:

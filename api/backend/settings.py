@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -24,6 +23,8 @@ INSTALLED_APPS = [
     'account',
     'user_requests',
     'contact_messages',
+    'products',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

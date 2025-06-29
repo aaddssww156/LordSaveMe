@@ -5,6 +5,7 @@ import Quiz from './assets/pages/Quiz';
 import ProfilePage from './assets/pages/ProfilePage';
 import TableView from './assets/pages/TableView';
 import RequestPage from './assets/pages/RequestPage';
+import GuitarCategoryPage from './assets/pages/GuitarCategoryPage';
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('accessToken');
@@ -20,6 +21,8 @@ function App() {
         <Route path="/table" element={<TableView />} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/register" element={<AuthPage />} />
+        <Route path="/register" element={<AuthPage />} />
+        <Route path="/market/guitars" element={<GuitarCategoryPage />} />
         <Route
           path="/profile/:userId?"
           element={

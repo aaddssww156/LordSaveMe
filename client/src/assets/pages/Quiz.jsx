@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import '../css/styles.css';
+import '../css/table_styles.css';
 import '../css/quiz.css';
 
 import BurgerMenu from '../components/BurgerMenu.js';
@@ -9,7 +10,6 @@ import BurgerMenu from '../components/BurgerMenu.js';
 import guitarImg from '../images/guitar.png';
 import cartImg from '../images/cart.png';
 import userImg from '../images/user.png';
-import kittyImg from '../images/kitty.png';
 
 const questions = [
   {
@@ -47,7 +47,7 @@ const questions = [
   },
   {
     id: 6,
-    text: 'Who is known for playing the guitar with his teeth?',
+    text: 'Who is known for playing the guitar with his teeth and using heavy distortion?',
     type: 'single',
     options: ['Jimi Hendrix', 'Carlos Santana', 'Eric Clapton', 'Jimmy Page'],
     correctAnswer: 'Jimi Hendrix',
@@ -61,38 +61,28 @@ function Quiz() {
   const [name, setName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
-  const [nameError, setNameError] = useState('');
-  const [touched, setTouched] = useState(false);
 
   const question = questions[current];
 
-  const validateName = (name) => {
-    if (!name.trim()) return 'Please enter your name';
-    if (name.length < 2) return 'Name must be at least 2 characters';
-    if (!/^[a-zA-Z\s'-]+$/.test(name)) return 'Invalid characters in name';
-    return '';
-  };
-
-  const handleInput = (value) => {
-    setName(value);
-    if (touched) {
-      setNameError(validateName(value));
+  const handleInput = (value, isChecked) => {
+    if (question.type === 'single') {
+      setAnswers((prev) => ({ ...prev, [question.id]: value }));
+    } else if (question.type === 'text') {
+      setName(value);
+    } else {
+      setAnswers((prev) => {
+        const currentAnswers = prev[question.id] || [];
+        const updatedAnswers = isChecked
+          ? [...currentAnswers, value]
+          : currentAnswers.filter((v) => v !== value);
+        return { ...prev, [question.id]: updatedAnswers };
+      });
     }
   };
 
-  const handleBlur = () => {
-    setTouched(true);
-    setNameError(validateName(name));
-  };
-
   const next = () => {
-    if (question.type === 'text') {
-      const error = validateName(name);
-      if (error) {
-        setNameError(error);
-        setTouched(true);
-        return;
-      }
+    if (question.type === 'text' && !name.trim()) {
+      return;
     }
     if (question.type !== 'text' && !answers[question.id]) {
       return;
@@ -129,14 +119,10 @@ function Quiz() {
     setScore(0);
     setAnswers({});
     setName('');
-    setNameError('');
-    setTouched(false);
   };
 
-  const isAuthenticated = !!localStorage.getItem('accessToken');
-
   return (
-    <div className="page-wrapper">
+    <>
       <div dangerouslySetInnerHTML={{
         __html: `
         <noscript>
@@ -154,40 +140,40 @@ function Quiz() {
 
       <div className="page-wrapper">
         <header>
-        <div className="logo-title">
-          <img src={guitarImg} alt="guitar" />
-          <h1>Rythm Road</h1>
-        </div>
-        <BurgerMenu />
-        <nav className="desktop-nav">
-          <ul className="nav-list">
-            <li><Link to="/">HOMEPAGE</Link></li>
-            <li className="dropdown">
-              <Link to="/marketplace">MARKETPLACE</Link>
-              <ul className="dropdown-content">
-                <li><Link to="/marketplace/guitars">Guitars</Link></li>
-                <li><Link to="/marketplace/drums">Drums</Link></li>
-              </ul>
-            </li>
-            <li className="dropdown">
-              <Link to="/table">ABOUT US</Link>
-              <ul className="dropdown-content">
-                <li><Link to="/quiz">Quiz</Link></li>
-                <li><Link to="/table">Table</Link></li>
-              </ul>
-            </li>
-            <li className="dropdown">
-              <Link to="/contact">CONTACT</Link>
-              <ul className="dropdown-content">
-                <li><Link to="/contact/contacts">Contacts</Link></li>
-                {isAuthenticated && <li><Link to="/user_requests">Request</Link></li>}
-              </ul>
-            </li>
-            <li><Link to="/cart"><img src={cartImg} alt="cart" className="icon" /></Link></li>
-            <li><Link to="/profile"><img src={userImg} alt="user" className="icon" /></Link></li>
-          </ul>
-        </nav>
-      </header>
+          <div className="logo-title">
+            <img src={guitarImg} alt="guitar" />
+            <h1>Rythm Road</h1>
+          </div>
+          <BurgerMenu />
+          <nav className="desktop-nav">
+            <ul className="nav-list">
+              <li><Link to="/">HOMEPAGE</Link></li>
+              <li className="dropdown">
+                <Link to="/marketplace">MARKETPLACE</Link>
+                <ul className="dropdown-content">
+                  <li><Link to="/marketplace/guitars">Guitars</Link></li>
+                  <li><Link to="/marketplace/drums">Drums</Link></li>
+                </ul>
+              </li>
+              <li className="dropdown">
+                <Link to="/table">ABOUT US</Link>
+                <ul className="dropdown-content">
+                  <li><Link to="/quiz">Quiz</Link></li>
+                  <li><Link to="/table">Table</Link></li>
+                </ul>
+              </li>
+              <li className="dropdown">
+                <Link to="/contact">CONTACT</Link>
+                <ul className="dropdown-content">
+                  <li><Link to="/contact/email">Email</Link></li>
+                  <li><Link to="/contact/phone">Phone</Link></li>
+                </ul>
+              </li>
+              <li><Link to="/cart"><img src={cartImg} alt="cart" className="icon" /></Link></li>
+              <li><Link to="/profile"><img src={userImg} alt="user" className="icon" /></Link></li>
+            </ul>
+          </nav>
+        </header>
 
         <div className="quiz-introduction">
           <h2>Take a short quiz and test your knowledge of the music world!</h2>
@@ -199,28 +185,13 @@ function Quiz() {
               <p>{question.text}</p>
 
               {question.type === 'text' && (
-                <div className="name-input-container">
-                  <div className="field">
-                    {nameError && (
-                      <div className="error-tooltip visible">{nameError}</div>
-                    )}
-                    <input
-                      className={`quiz-input ${nameError ? 'has-error' : ''}`}
-                      type="text"
-                      value={name}
-                      onChange={(e) => handleInput(e.target.value)}
-                      onBlur={handleBlur}
-                      placeholder="Enter your name"
-                    />
-                  </div>
-                  <div className="image-container">
-                    <img
-                      src={kittyImg}
-                      alt="RockKitty"
-                      className="name-question-image"
-                    />
-                  </div>
-                </div>
+                <input
+                  className="quiz-input"
+                  type="text"
+                  value={name}
+                  onChange={(e) => handleInput(e.target.value)}
+                  placeholder="Enter your name"
+                />
               )}
 
               {question.type === 'single' && (
@@ -234,7 +205,7 @@ function Quiz() {
                           name={`q${question.id}`}
                           value={opt}
                           checked={answers[question.id] === opt}
-                          onChange={() => setAnswers(prev => ({...prev, [question.id]: opt}))}
+                          onChange={() => handleInput(opt)}
                         />
                       </span>
                     </label>
@@ -253,13 +224,7 @@ function Quiz() {
                           name={`q${question.id}`}
                           value={opt}
                           checked={(answers[question.id] || []).includes(opt)}
-                          onChange={(e) => {
-                            const prevAnswers = answers[question.id] || [];
-                            const newAnswers = e.target.checked
-                              ? [...prevAnswers, opt]
-                              : prevAnswers.filter(a => a !== opt);
-                            setAnswers(prev => ({...prev, [question.id]: newAnswers}));
-                          }}
+                          onChange={(e) => handleInput(opt, e.target.checked)}
                         />
                       </span>
                     </label>
@@ -294,10 +259,10 @@ function Quiz() {
             <Link to="/promo">Promo</Link>
             <Link to="/quiz">Contact</Link>
           </nav>
-          <p>&copy; 2025 All rights reserved - Rythm Road</p>
+          <p>&copy; 2025 All rights reserved - Rhythm Road</p>
         </footer>
       </div>
-    </div>
+    </>
   );
 }
 
