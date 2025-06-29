@@ -137,11 +137,6 @@ function ProfilePage() {
       return;
     }
 
-    if (!formData.date_of_birth) {
-      setErrorMessage('Date of birth is required');
-      return;
-    }
-
     const parsedPhone = formData.phone_number.replace(/\D/g, '');
     const parsedDate = formData.date_of_birth.split('/').reverse().join('-');
 
@@ -310,7 +305,7 @@ function ProfilePage() {
             </li>
             <li><Link to="/cart"><img src={cartImg} alt="cart" className="icon" /></Link></li>
             <li className="active">
-              <Link to={`/profile/${currentUserId}`}>
+              <Link to={`/profile`}>
                 <img src={userImg} alt="user" className="icon" />
               </Link>
             </li>
@@ -370,75 +365,75 @@ function ProfilePage() {
               <div className="form-group">
                 <label>Email:</label>
                 {editMode && isCurrentUser ? (
-                  <input
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    type="email"
-                    className="profile-input"
-                    placeholder="example@domain.com"
-                  />
-                ) : (
-                  <input
-                    readOnly
-                    value={formData.email || '-'}
-                    className="profile-input profile-input-readonly"
-                  />
-                )}
+                    <input
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      type="email"
+                      className="profile-input"
+                      placeholder="example@domain.com"
+                    />
+                  ) : (
+                    <input
+                      readOnly
+                      value={formData.email || '-'}
+                      className="profile-input profile-input-readonly"
+                    />
+                  )}
               </div>
               <div className="form-group">
                 <label>Phone Number:</label>
                 {editMode && isCurrentUser ? (
-                  <input
-                    name="phone_number"
-                    value={formData.phone_number}
-                    onChange={handleChange}
-                    className="profile-input"
-                    placeholder="(123) 456-7890"
-                  />
-                ) : (
-                  <input
-                    readOnly
-                    value={formData.phone_number || '-'}
-                    className="profile-input profile-input-readonly"
-                  />
-                )}
+                    <input
+                      name="phone_number"
+                      value={formData.phone_number}
+                      onChange={handleChange}
+                      className="profile-input"
+                      placeholder="(123) 456-7890"
+                    />
+                  ) : (
+                    <input
+                      readOnly
+                      value={formData.phone_number || '-'}
+                      className="profile-input profile-input-readonly"
+                    />
+                  )}
               </div>
               <div className="form-group">
                 <label>City:</label>
                 {editMode && isCurrentUser ? (
-                  <input
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className="profile-input"
-                    placeholder="New York"
-                  />
-                ) : (
-                  <input
-                    readOnly
-                    value={formData.city || '-'}
-                    className="profile-input profile-input-readonly"
-                  />
-                )}
+                    <input
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      className="profile-input"
+                      placeholder="New York"
+                    />
+                  ) : (
+                    <input
+                      readOnly
+                      value={formData.city || '-'}
+                      className="profile-input profile-input-readonly"
+                    />
+                  )}
               </div>
               <div className="form-group">
                 <label>Date of Birth:</label>
                 {editMode && isCurrentUser ? (
-                  <input
-                    name="date_of_birth"
-                    value={formData.date_of_birth}
-                    onChange={handleChange}
-                    className="profile-input"
-                    placeholder="DD/MM/YYYY"
-                  />
-                ) : (
-                  <input
-                    readOnly
-                    value={formData.date_of_birth || '-'}
-                    className="profile-input profile-input-readonly"
-                  />
-                )}
+                    <input
+                      name="date_of_birth"
+                      value={formData.date_of_birth}
+                      onChange={handleChange}
+                      className="profile-input"
+                      placeholder="DD/MM/YYYY"
+                    />
+                  ) : (
+                    <input
+                      readOnly
+                      value={formData.date_of_birth || '-'}
+                      className="profile-input profile-input-readonly"
+                    />
+                  )}
               </div>
 
               <div className="fixed-message-space">
