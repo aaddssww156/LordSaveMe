@@ -22,7 +22,6 @@ class RequestViewSet(viewsets.ModelViewSet):
         elif self.action in ['update', 'partial_update']:
             permission_classes = [IsStaff]
         elif self.action == 'destroy':
-            # Разрешаем удаление как админам, так и владельцам запросов
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
 

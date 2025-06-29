@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'contact_messages',
     'products',
     'django_filters',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

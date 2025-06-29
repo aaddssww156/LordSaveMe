@@ -12,7 +12,7 @@ import '../css/styles.css';
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState(true);
   const isAuthenticated = !!localStorage.getItem('accessToken');
-  const userId = localStorage.getItem('userId');
+  // const userId = localStorage.getItem('userId');
 
   return (
     <>

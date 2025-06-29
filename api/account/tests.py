@@ -1,103 +1,98 @@
 from django.test import TestCase
-from rest_framework.test import APITestCase
-from account.models import CustomUser
-from account.serializers import UserCreateSerializer, UserSerializer
+from django.contrib.auth import get_user_model
+from rest_framework.test import APIClient
 from rest_framework import status
+from django.contrib.auth.models import Group
 from django.urls import reverse
-from django.core.exceptions import ValidationError
+
+User = get_user_model()
 
 class CustomUserModelTest(TestCase):
-    def test_valid_phone_creation(self):
-        user = CustomUser.objects.create_user(
+    def test_create_user(self):
+        user = User.objects.create_user(
             email='test@example.com',
             password='password123',
-            phone_number='1234567890'
+            phone_number='(123)456-7890'
         )
         self.assertEqual(user.email, 'test@example.com')
-        self.assertEqual(user.phone_number, '1234567890')
         self.assertTrue(user.check_password('password123'))
+        self.assertEqual(user.phone_number, '(123)456-7890')
 
-    def test_invalid_phone_validation(self):
-        for bad in ['12345', '12345678901', 'abcdefghij']:
-            u = CustomUser(email=f'bad{bad}@example.com', phone_number=bad)
-            with self.assertRaises(ValidationError):
-                u.full_clean()
+    def test_user_str_representation(self):
+        user = User.objects.create_user(email='str_test@example.com')
+        self.assertEqual(str(user), 'str_test@example.com')
 
-    def test_phone_format_method(self):
-        user = CustomUser.objects.create_user(
-            email='fmt@example.com',
-            password='pass123',
-            phone_number='1234567890'
-        )
-        fmt = user.get_formatted_phone()
-        self.assertEqual(fmt, '(123) 456-7890')
+    def test_is_moderator_method(self):
+        user = User.objects.create_user(email='moderator@example.com')
+        group = Group.objects.create(name='Moderators')
+        user.groups.add(group)
+        self.assertTrue(user.is_moderator())
 
-class UserSerializerTest(APITestCase):
-    def test_create_valid(self):
-        data = {
-            'email': 'new@example.com',
-            'password': 'password123',
-            'first_name': 'A',
-            'last_name': 'B',
-            'phone_number': '1234567890'
-        }
-        s = UserCreateSerializer(data=data)
-        self.assertTrue(s.is_valid(), s.errors)
-        u = s.save()
-        self.assertEqual(u.phone_number, '1234567890')
+    def test_is_admin_method(self):
+        user = User.objects.create_superuser(email='admin@example.com', password='admin123')
+        self.assertTrue(user.is_admin())
 
-    def test_create_invalid_phone(self):
-        data = {
-            'email': 'x@example.com',
-            'password': 'password123',
-            'phone_number': '123'
-        }
-        s = UserCreateSerializer(data=data)
-        self.assertFalse(s.is_valid())
-        self.assertIn('phone_number', s.errors)
+class CustomUserManagerTest(TestCase):
+    def test_create_user(self):
+        user = User.objects.create_user(email='manager@example.com', password='pass123')
+        self.assertFalse(user.is_staff)
+        self.assertFalse(user.is_superuser)
 
-    def test_serialize_phone_format(self):
-        user = CustomUser.objects.create_user(
-            email='srv@example.com',
-            password='pwd',
-            phone_number='1234567890'
-        )
-        s = UserSerializer(user)
-        self.assertEqual(s.data.get('phone_number'), '(123) 456-7890')
+    def test_create_superuser(self):
+        admin = User.objects.create_superuser(email='super@example.com', password='super123')
+        self.assertTrue(admin.is_staff)
+        self.assertTrue(admin.is_superuser)
 
-class ProfileViewTest(APITestCase):
+class ProfileViewTest(TestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(
-            email='testp@example.com',
-            password='password',
-            phone_number='1234567890'
+        self.client = APIClient()
+        self.user = User.objects.create_user(
+            email='profile@test.com',
+            password='testpass',
+            first_name='John',
+            last_name='Doe'
         )
+        self.admin = User.objects.create_superuser(
+            email='admin@test.com',
+            password='adminpass'
+        )
+        self.profile_url = reverse('profile')
+        self.profile_detail_url = reverse('profile-detail', kwargs={'user_id': self.user.id})
+
+    def test_get_own_profile(self):
         self.client.force_authenticate(user=self.user)
+        response = self.client.get(self.profile_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['email'], 'profile@test.com')
 
-    def test_get_profile_phone(self):
-        url = reverse('profile')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
-        self.assertEqual(resp.data.get('phone_number'), '(123) 456-7890')
+    def test_update_own_profile(self):
+        self.client.force_authenticate(user=self.user)
+        data = {'first_name': 'Updated'}
+        response = self.client.patch(self.profile_url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.first_name, 'Updated')
 
-class CustomViewTest(APITestCase):
+    def test_admin_can_update_other_profile(self):
+        self.client.force_authenticate(user=self.admin)
+        data = {'last_name': 'AdminUpdated'}
+        response = self.client.patch(self.profile_detail_url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.last_name, 'AdminUpdated')
+
+class DeleteAccountViewTest(TestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(
-            email='testc@example.com',
-            password='password',
-            phone_number='1234567890'
+        self.client = APIClient()
+        self.user = User.objects.create_user(
+            email='delete@test.com',
+            password='password123'
         )
+        self.delete_url = reverse('delete-account')
+    
+    def test_delete_account(self):
         self.client.force_authenticate(user=self.user)
-
-    def test_get_custom(self):
-        url = reverse('custom_view')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
-        self.assertEqual(resp.data.get('user'), 'testc@example.com')
-
-    def test_post_custom(self):
-        url = reverse('custom_view')
-        data = {'key': 'value'}
-        resp = self.client.post(url, data)
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
-        self.assertEqual(resp.data.get('data'), data)
+        data = {'current_password': 'password123'}
+        response = self.client.delete(self.delete_url, data)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(User.objects.filter(email='delete@test.com').exists())

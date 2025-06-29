@@ -46,14 +46,8 @@ function Home({ isAuthenticated = false }) {
             <li className="dropdown">
               <Link to="/contact">CONTACT</Link>
               <ul className="dropdown-content">
-                <li>
-                  <Link to="/contact/contacts">Contacts</Link>
-                </li>
-                {isAuthenticated && (
-                  <li>
-                    <Link to="/user_requests">Request</Link>
-                  </li>
-                )}
+                <li><Link to="/contact/contacts">Contacts</Link></li>
+                {isAuthenticated && <li><Link to="/user_requests">Request</Link></li>}
               </ul>
             </li>
             <li>
