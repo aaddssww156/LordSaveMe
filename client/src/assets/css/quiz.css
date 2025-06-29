@@ -293,6 +293,11 @@
   margin-top: 20px;
 }
 
+.image-container img {
+  width: 29%; 
+  height: auto;
+}
+
 .name-question-image {
   width: 100px;
   height: auto;
