@@ -1,0 +1,221 @@
+.contact-container {
+  max-width: 600px;
+  margin: 30px auto;
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.contact-container h2 {
+  font-size: 32px;
+  margin-top: 10px !important;
+  margin-bottom: 47px !important;
+  color: #0a2a5c;
+  position: relative;
+}
+
+.contact-container h2::after {
+  content: "";
+  display: block;
+  /* height: 50px; Дополнительный отступ */
+  width: 1px;
+  visibility: hidden;
+}
+
+.contact-container .contact-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.contact-container .inline-fields {
+  display: flex;
+  gap: 40px;
+}
+
+.contact-container .inline-fields > .field {
+  flex: 1;
+}
+
+.contact-container .field {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  margin-bottom: 48px; /* Вертикальный отступ */
+}
+
+.contact-container input,
+.contact-container textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: #fff;
+  color: #333;
+}
+
+.contact-container input:focus,
+.contact-container textarea:focus {
+  border-color: #0a2a5c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(10, 42, 92, 0.15);
+}
+
+.contact-container textarea {
+  resize: vertical;
+  min-height: 130px;
+  padding: 14px 18px;
+}
+
+.contact-container input.has-error,
+.contact-container textarea.has-error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+}
+
+.contact-container .error-tooltip {
+  position: absolute;
+  top: -45px;
+  left: 0;
+  width: 100%;
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.contact-container .error-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: popIn 0.4s ease;
+}
+
+.contact-container button {
+  background-color: #7ec8ff;
+  color: #0a2a5c;
+  padding: 14px 25px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s;
+  margin-top: -15px; /* Увеличенный отступ */
+}
+
+.contact-container button:hover {
+  background-color: #5ea6df;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.contact-container .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 42, 92, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.contact-container .modal-content {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.contact-container .modal-content h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+  color: #0a2a5c;
+}
+
+.contact-container .modal-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1.8rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.contact-container .restart-btn {
+  background-color: #6ec1ff;
+  padding: 0.9rem 1.8rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.contact-container .restart-btn:hover {
+  background-color: #57acee;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-container .inline-fields {
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .contact-container .error-tooltip {
+    top: -50px;
+    font-size: 14px;
+  }
+  
+  /* .contact-container h2 {
+    margin-bottom: 1px !important;
+  } */
+  
+  .contact-container .field {
+    margin-bottom: 40px;
+  }
+}

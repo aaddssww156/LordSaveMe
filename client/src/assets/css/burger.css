@@ -1,0 +1,154 @@
+.burger-container {
+  position: relative;
+  z-index: 1001;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.burger span {
+  width: 100%;
+  height: 3px;
+  background: #D1EAFA;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  position: relative;
+  transform-origin: center;
+}
+
+.burger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.burger-nav {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 70%;
+  max-width: 250px;
+  height: 100vh;
+  background-color: #222;
+  padding: 70px 15px 20px;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.burger-nav.active {
+  right: 0;
+}
+
+.burger-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.burger-nav-item {
+  border-bottom: 1px solid #444;
+  position: relative;
+}
+
+.burger-nav-item.simple-item {
+  display: flex;
+  align-items: center;
+}
+
+.burger-nav-item.simple-item .nav-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  color: #D1EAFA;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.burger-nav-item.simple-item .nav-item:hover {
+  color: #7ec8ff;
+}
+
+.burger-nav-item.simple-item .nav-item.with-icon {
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.burger-submenu {
+  list-style: none;
+  padding: 0 0 0 10px;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.burger-submenu.active {
+  max-height: 500px;
+}
+
+.burger-submenu li {
+  padding: 8px 0;
+}
+
+.burger-submenu .nav-item {
+  color: #D1EAFA;
+  font-size: 14px;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s;
+}
+
+.burger-submenu .nav-item:hover {
+  color: #7ec8ff;
+}
+
+.dropdown-arrow {
+  font-size: 18px;
+  margin-left: 8px;
+}
+
+.nav-item-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  color: #D1EAFA;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.simple-item .icon {
+  height: 18px;
+  width: 18px;
+}
+
+@media (max-width: 1024px) {
+  .burger {
+    display: flex;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+}

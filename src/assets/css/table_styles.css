@@ -1,0 +1,24 @@
+.table-container {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 0 20px; 
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%; 
+  max-width: 1200px; 
+}
+
+td {
+  border: 1.5px solid #000;
+  outline: 1px solid #568183;
+  outline-offset: -4px;
+  padding: 18px 20px;
+  text-align: left;
+  vertical-align: top;
+  height: 50px;
+  width: 250px;
+  font-size: 18px;
+}
