@@ -692,15 +692,15 @@ function RequestPage() {
                           <strong>Attachments:</strong>
                           <div className="file-list">
                             {request.files.map((file, index) => (
-                              <a
-                                key={`${request.id}-file-${index}`}
-                                href={file.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="file-link"
-                              >
-                                📄 {file.name || `File ${index + 1}`}
-                              </a>
+                            <a
+                              key={`${request.id}-file-${index}`}
+                              href={file.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="file-link"
+                            >
+                              📄 {file.name || `File ${index + 1}`}
+                            </a>
                             ))}
                           </div>
                         </div>
