@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { register, login } from '../../api';
+import { register, login, getProfile } from '../../api';
 
 const AgreementModal = ({ show, onClose, onAgree, title, text }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -207,8 +207,15 @@ Your privacy is important to us. This policy explains how we collect, use, and p
       const response = await login({ email: form.email, password: form.password });
       const { access } = response.data;
       localStorage.setItem('accessToken', access);
+
+      const profileResponse = await getProfile(); 
+      console.log('profileResponse:', profileResponse); 
+      const userId = profileResponse.data.id; 
+      console.log('Retrieved userId:', userId); 
+      localStorage.setItem('userId', userId); 
+
       setSuccessMessage(`Welcome, ${capitalizeName(form.first_name)}!`);
-      setTimeout(() => navigate('/profile'), 2000);
+      setTimeout(() => navigate(`/profile/${userId}`), 2000); 
     } catch (error) {
       if (error.response?.data) {
         const newErrors = {};

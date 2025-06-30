@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../api';
+import { login, getProfile } from '../../api';
 
 function LoginForm({ onSwitch }) {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -63,7 +63,12 @@ function LoginForm({ onSwitch }) {
         const response = await login(form);
         const { access } = response.data;
         localStorage.setItem('accessToken', access);
-        navigate('/profile', { replace: true });
+
+        const profileResponse = await getProfile(); 
+        const userId = profileResponse.data.id; 
+        localStorage.setItem('userId', userId); 
+
+        navigate(`/profile/${userId}`, { replace: true }); 
       } catch (error) {
         if (error.response?.data) {
           if (error.response.data.detail) {
