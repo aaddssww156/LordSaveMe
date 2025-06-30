@@ -61,6 +61,7 @@ function ProfilePage() {
   const initialDataRef = useRef(null);
   const currentUserId = localStorage.getItem('userId');
   const isCurrentUser = userId ? parseInt(userId) === parseInt(currentUserId) : true;
+  const [showContent, setShowContent] = useState(false); 
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -91,7 +92,10 @@ function ProfilePage() {
           navigate('/login');
         }
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+          setShowContent(true); 
+        }, 300); 
       }
     };
     fetchProfile();
@@ -227,7 +231,7 @@ function ProfilePage() {
 
   const isAuthenticated = !!localStorage.getItem('accessToken');
 
-  if (loading) {
+  if (loading || !showContent) { 
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
