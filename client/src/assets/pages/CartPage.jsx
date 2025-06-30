@@ -52,8 +52,8 @@ const CartPage = () => {
                 className={`dropdown-content ${dropdownOpen === 'marketplace' ? 'active' : ''}`}
                 onClick={closeDropdowns}
               >
-                <li><Link to="/marketplace/guitars">Guitars</Link></li>
-                <li><Link to="/marketplace/drums">Drums</Link></li>
+                <li><Link to="/marketplace/acoustic-guitars">Guitars</Link></li>
+                <li><Link to="/marketplace/electric-guitars">Electric-guitars</Link></li>
               </ul>
             </li>
             <li className="dropdown" onMouseLeave={closeDropdowns}>
@@ -113,7 +113,7 @@ const CartPage = () => {
                 <h2>Your cart is empty</h2>
                 <p>Looks like you haven't added anything to your cart yet</p>
                 <button 
-                  onClick={() => navigate('/marketplace/guitars')}
+                  onClick={() => navigate('/marketplace/acoustic-guitars')}
                   className="continue-shopping-btn"
                 >
                   Continue Shopping

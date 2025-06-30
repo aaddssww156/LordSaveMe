@@ -86,9 +86,8 @@ const GuitarCategoryPage = () => {
           <ul className="nav-list">
             <li>
               <NavLink 
-                exact 
                 to="/" 
-                activeClassName="nav-active"
+                className={({ isActive }) => (isActive ? "nav-active" : undefined)}
                 onClick={closeDropdowns}
               >
                 HOMEPAGE
@@ -100,7 +99,7 @@ const GuitarCategoryPage = () => {
             >
               <NavLink 
                 to="/marketplace" 
-                activeClassName="nav-active"
+                className={({ isActive }) => (isActive ? "nav-active" : undefined)}
                 onMouseEnter={() => toggleDropdown('marketplace')}
                 onClick={closeDropdowns}
               >
@@ -110,8 +109,8 @@ const GuitarCategoryPage = () => {
                 className={`dropdown-content ${dropdownOpen === 'marketplace' ? 'active' : ''}`}
                 onClick={closeDropdowns}
               >
-                <li><Link to="/marketplace/guitars">Guitars</Link></li>
-                <li><Link to="/marketplace/drums">Drums</Link></li>
+                <li><Link to="/marketplace/acoustic-guitars">Guitars</Link></li>
+                <li><Link to="/marketplace/electric-guitars">Electric-guitars</Link></li>
               </ul>
             </li>
             <li 
@@ -120,7 +119,7 @@ const GuitarCategoryPage = () => {
             >
               <NavLink 
                 to="/table" 
-                activeClassName="nav-active"
+                className={({ isActive }) => (isActive ? "nav-active" : undefined)}
                 onMouseEnter={() => toggleDropdown('about')}
                 onClick={closeDropdowns}
               >
@@ -140,7 +139,7 @@ const GuitarCategoryPage = () => {
             >
               <NavLink 
                 to="/contact" 
-                activeClassName="nav-active"
+                className={({ isActive }) => (isActive ? "nav-active" : undefined)}
                 onMouseEnter={() => toggleDropdown('contact')}
                 onClick={closeDropdowns}
               >

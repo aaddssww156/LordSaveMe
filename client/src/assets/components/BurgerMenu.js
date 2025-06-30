@@ -62,13 +62,13 @@ function BurgerMenu() {
             </div>
             <ul className={`burger-submenu ${activeDropdown === 'marketplace' ? 'active' : ''}`}>
               <li>
-                <Link to="/marketplace/guitars" className="nav-item">
+                <Link to="/marketplace/acoustic-guitars" className="nav-item">
                   Guitars
                 </Link>
               </li>
               <li>
-                <Link to="/marketplace/drums" className="nav-item">
-                  Drums
+                <Link to="/marketplace/electric-guitars" className="nav-item">
+                  Electric-guitars 
                 </Link>
               </li>
             </ul>

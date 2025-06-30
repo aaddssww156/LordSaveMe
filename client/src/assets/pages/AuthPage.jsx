@@ -31,10 +31,10 @@ export default function AuthPage() {
               <Link to="/marketplace">MARKETPLACE</Link>
               <ul className="dropdown-content">
                 <li>
-                  <Link to="/marketplace/guitars">Guitars</Link>
+                  <Link to="/marketplace/acoustic-guitars">Guitars</Link>
                 </li>
                 <li>
-                  <Link to="/marketplace/drums">Drums</Link>
+                  <Link to="/marketplace/electric-guitars">Electric-guitars</Link>
                 </li>
               </ul>
             </li>

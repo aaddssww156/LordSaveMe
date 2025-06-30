@@ -14,7 +14,7 @@ const DrumsCategoryPage = () => {
   useEffect(() => {
     const fetchDrums = async () => {
       try {
-        const response = await API.get('/api/products/?category=drums');
+        const response = await API.get('/api/products/?category=electric-guitars');
         setProducts(response.data);
       } catch (err) {
         setError('Failed to load drums');
@@ -30,7 +30,7 @@ const DrumsCategoryPage = () => {
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
-        <p>Loading drums...</p>
+        <p>Loading electric-guitars...</p>
       </div>
     );
   }
@@ -41,7 +41,7 @@ const DrumsCategoryPage = () => {
 
   return (
     <div className="marketplace-page">
-      <h1>Drums</h1>
+      <h1>Electric-guitars</h1>
       <div className="products-grid">
         {products.map(product => (
           <ProductItem key={product.id} product={product} />

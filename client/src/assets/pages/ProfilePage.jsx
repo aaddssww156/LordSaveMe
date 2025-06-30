@@ -289,8 +289,8 @@ function ProfilePage() {
             <li className="dropdown">
               <Link to="/marketplace">MARKETPLACE</Link>
               <ul className="dropdown-content">
-                <li><Link to="/marketplace/guitars">Guitars</Link></li>
-                <li><Link to="/marketplace/drums">Drums</Link></li>
+                <li><Link to="/marketplace/acoustic-guitars">Guitars</Link></li>
+                <li><Link to="/marketplace/electric-guitars">Electric-guitars</Link></li>
               </ul>
             </li>
             <li className="dropdown">
