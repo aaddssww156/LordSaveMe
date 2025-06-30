@@ -38,11 +38,11 @@ const CartPage = () => {
         </div>
         <nav className="desktop-nav">
           <ul className="nav-list">
-            <li><NavLink exact to="/" activeClassName="active">HOMEPAGE</NavLink></li>
+            <li><NavLink to="/" className={({ isActive }) => (isActive ? "active" : undefined)}>HOMEPAGE</NavLink></li>
             <li className="dropdown" onMouseLeave={closeDropdowns}>
               <NavLink 
                 to="/marketplace" 
-                activeClassName="active"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
                 onMouseEnter={() => toggleDropdown('marketplace')}
                 onClick={closeDropdowns}
               >
@@ -59,7 +59,7 @@ const CartPage = () => {
             <li className="dropdown" onMouseLeave={closeDropdowns}>
               <NavLink 
                 to="/table" 
-                activeClassName="active"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
                 onMouseEnter={() => toggleDropdown('about')}
                 onClick={closeDropdowns}
               >
@@ -76,7 +76,7 @@ const CartPage = () => {
             <li className="dropdown" onMouseLeave={closeDropdowns}>
               <NavLink 
                 to="/contact" 
-                activeClassName="active"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
                 onMouseEnter={() => toggleDropdown('contact')}
                 onClick={closeDropdowns}
               >
@@ -164,7 +164,7 @@ const CartPage = () => {
                 <div className="summary-details">
                   <div className="summary-row">
                     <span>Subtotal</span>
-                    <span>${getTotalPrice().toFixed(2)}</span>
+                    <span>${getTotalPrice()}</span>
                   </div>
                   <div className="summary-row">
                     <span>Shipping</span>
@@ -172,7 +172,7 @@ const CartPage = () => {
                   </div>
                   <div className="summary-row total-row">
                     <span>Total</span>
-                    <span className="total-price">${getTotalPrice().toFixed(2)}</span>
+                    <span className="total-price">${getTotalPrice()}</span>
                   </div>
                 </div>
                 <button 
