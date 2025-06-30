@@ -4,7 +4,7 @@ from .models import CustomUser
 class UserCreateSerializer(BaseUserCreateSerializer):
     class Meta(BaseUserCreateSerializer.Meta):
         model = CustomUser
-        fields = [
+        fields = (
             'email',
             'phone_number',
             'city',
@@ -12,12 +12,12 @@ class UserCreateSerializer(BaseUserCreateSerializer):
             'last_name',
             'date_of_birth',
             'password'
-        ]
+        )
 
 class UserSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta):
         model = CustomUser
-        fields = [
+        fields = (
             'id',
             'email',
             'phone_number',
@@ -25,7 +25,7 @@ class UserSerializer(BaseUserSerializer):
             'first_name',
             'last_name',
             'date_of_birth'
-        ]
+        )
     
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
