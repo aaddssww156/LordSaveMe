@@ -121,7 +121,7 @@ DJOSER = {
     'USER_ID_FIELD': 'id',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SERIALIZERS': {
-        'user_create': 'account.serializers.UserCreateSerializer',
+        'user_create_password_retype': 'account.serializers.UserCreateSerializer',
         'user': 'account.serializers.UserSerializer',
         'current_user': 'account.serializers.UserSerializer',
     },
