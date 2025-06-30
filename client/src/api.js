@@ -55,6 +55,9 @@ export const updateProfile = (data, userId) =>
 export const deleteAccount = current_password =>
   API.delete('/api/users/delete-account/', { data: { current_password } });
 
+export const getProductsByCategory = categorySlug =>
+  API.get(`/api/products/?category__slug=${categorySlug}`);
+
 export const logout = () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');

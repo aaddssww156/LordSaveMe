@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getProductsByCategory } from '../../api';
 import ProductItem from '../components/ProductItem';
 import BurgerMenu from '../components/BurgerMenu';
@@ -13,23 +13,24 @@ const GuitarCategoryPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { categorySlug } = useParams();
   const isAuthenticated = !!localStorage.getItem('accessToken');
   const currentUserId = localStorage.getItem('userId');
 
   useEffect(() => {
-    const fetchGuitars = async () => {
+    const fetchProducts = async () => {
       try {
-        const response = await getProductsByCategory('guitars');
-        setProducts(response.data.results);
+        const response = await getProductsByCategory(categorySlug);
+        setProducts(response.data);
       } catch (err) {
-        setError('Failed to load guitars');
+        setError(`Failed to load ${categorySlug}`);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchGuitars();
-  }, []);
+    fetchProducts();
+  }, [categorySlug]);
 
   if (loading) {
     return (
@@ -87,7 +88,7 @@ const GuitarCategoryPage = () => {
       </header>
 
       <div className="marketplace-page">
-        <h1>Guitars</h1>
+        <h1>{categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1)}</h1>
         <div className="products-grid">
           {products.map(product => (
             <ProductItem key={product.id} product={product} />

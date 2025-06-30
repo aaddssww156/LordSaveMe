@@ -22,7 +22,7 @@ const CartPage = () => {
         <div className="empty-cart">
           <p>Your cart is empty</p>
           <button 
-            onClick={() => navigate('/marketplace')}
+            onClick={() => navigate(-1)}
             className="continue-shopping-btn"
           >
             Continue Shopping
@@ -40,7 +40,7 @@ const CartPage = () => {
                 />
                 <div className="cart-item-details">
                   <h3 className="cart-item-name">{item.name}</h3>
-                  <p className="cart-item-price">${item.price.toFixed(2)}</p>
+                  <p className="cart-item-price">${Number(item.price).toFixed(2)}</p>
                   <div className="quantity-controls">
                     <button 
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}

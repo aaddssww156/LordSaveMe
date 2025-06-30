@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 const ProductItem = ({ product }) => {
+  const { addToCart } = useCart();
+
   return (
     <div className="product-item">
       <Link to={`/product/${product.id}`}>
@@ -17,7 +20,12 @@ const ProductItem = ({ product }) => {
       </div>
       <div className="product-footer">
         <span className="product-price">${product.price}</span>
-        <button className="add-to-cart-btn">Add to Cart</button>
+        <button 
+          className="add-to-cart-btn" 
+          onClick={() => addToCart(product)}
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );

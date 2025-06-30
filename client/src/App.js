@@ -6,6 +6,8 @@ import ProfilePage from './assets/pages/ProfilePage';
 import TableView from './assets/pages/TableView';
 import RequestPage from './assets/pages/RequestPage';
 import GuitarCategoryPage from './assets/pages/GuitarCategoryPage';
+import CartPage from './assets/pages/CartPage';
+import { CartProvider } from './assets/context/CartContext';
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('accessToken');
@@ -14,33 +16,35 @@ function ProtectedRoute({ children }) {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/quiz" element={<Quiz />} />
-        <Route path="/table" element={<TableView />} />
-        <Route path="/login" element={<AuthPage />} />
-        <Route path="/register" element={<AuthPage />} />
-        <Route path="/register" element={<AuthPage />} />
-        <Route path="/market/guitars" element={<GuitarCategoryPage />} />
-        <Route
-          path="/profile/:userId?"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/user_requests"
-          element={
-            <ProtectedRoute>
-              <RequestPage />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Router>
+    <CartProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/table" element={<TableView />} />
+          <Route path="/login" element={<AuthPage />} />
+          <Route path="/register" element={<AuthPage />} />
+          <Route path="/marketplace/:categorySlug" element={<GuitarCategoryPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/profile/:userId?"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user_requests"
+            element={
+              <ProtectedRoute>
+                <RequestPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </CartProvider>
   );
 }
 
